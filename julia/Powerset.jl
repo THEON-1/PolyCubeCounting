@@ -31,8 +31,16 @@ end
 function getPowerSubSet(setSize::Integer, subSetSize::Integer)
     PowerSet = getPowerSet(setSize)
     setSizes = dropdim(sum(Powerset, dims = 2), dims = 2)
-
-    return 
+    powerSubSetSize = binomial(setSize, subSetSize)
+    powerSubSets = Matrix{Int64}(undef, powerSubSetSize, setSize)
+    j = 1
+    for i ∈ 1:setSize
+        if setSizes[i] == subSetSize
+            powerSubSets[j, :] = PowerSet[i, :]
+            j += 1
+        end
+    end
+    return powerSubSets
 end
 
 end
