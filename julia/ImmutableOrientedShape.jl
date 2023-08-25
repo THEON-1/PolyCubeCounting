@@ -16,3 +16,5 @@ function Base.==(X::ImmutableOrientedShape, Y::ImmutableOrientedShape)
         return true
     end
 end
+
+Base.isequal(X:ImmutableOrientedShape, Y::ImmutableOrientedShape) = X == Y
