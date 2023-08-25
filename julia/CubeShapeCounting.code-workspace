@@ -4,5 +4,12 @@
 			"path": ".."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.exclude": {
+			"**/*.sln": true,
+			"**/*.code-workspace": true,
+			"**/.gitignore": true,
+			"**/.gitattributes": true
+		}
+	}
 }
