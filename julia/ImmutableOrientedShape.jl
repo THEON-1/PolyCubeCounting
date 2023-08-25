@@ -1,4 +1,3 @@
-include("Shape.jl")
 
 struct ImmutableOrientedShape
     cubes::List{Tuple{Int8, Int8, Int8}}
