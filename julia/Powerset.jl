@@ -1,4 +1,3 @@
-
 module Powerset
 
 global _calculatedPowerSets = Matrix{Int64}(undef, 1, 0)
