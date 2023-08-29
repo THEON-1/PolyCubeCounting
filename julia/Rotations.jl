@@ -1,38 +1,37 @@
 
-const global _rot01(x) = (x[1], x[2], x[3])
-const global _rot02(x) = (x[2], x[3], x[1])
-const global _rot03(x) = (x[3], x[1], x[2])
+const global _rot01(x)::Tuple{Int64, Int64, Int64} = ( x[1],  x[2],  x[3])
+const global _rot02(x)::Tuple{Int64, Int64, Int64} = ( x[2],  x[3],  x[1])
+const global _rot03(x)::Tuple{Int64, Int64, Int64} = ( x[3],  x[1],  x[2])
 
-const global _rot04(x) = (x[1], -x[2], -x[3])
-const global _rot05(x) = (x[2], -x[3], -x[1])
-const global _rot06(x) = (x[3], -x[1], -x[2])
+const global _rot04(x)::Tuple{Int64, Int64, Int64} = ( x[1], -x[2], -x[3])
+const global _rot05(x)::Tuple{Int64, Int64, Int64} = ( x[2], -x[3], -x[1])
+const global _rot06(x)::Tuple{Int64, Int64, Int64} = ( x[3], -x[1], -x[2])
 
-const global _rot07(x) = (-x[1], x[2], -x[3])
-const global _rot08(x) = (-x[2], x[3], -x[1])
-const global _rot09(x) = (-x[3], x[1], -x[2])
+const global _rot07(x)::Tuple{Int64, Int64, Int64} = (-x[1],  x[2], -x[3])
+const global _rot08(x)::Tuple{Int64, Int64, Int64} = (-x[2],  x[3], -x[1])
+const global _rot09(x)::Tuple{Int64, Int64, Int64} = (-x[3],  x[1], -x[2])
 
-const global _rot10(x) = (-x[1], -x[2], x[3])
-const global _rot11(x) = (-x[2], -x[3], x[1])
-const global _rot12(x) = (-x[3], -x[1], x[2])
+const global _rot10(x)::Tuple{Int64, Int64, Int64} = (-x[1], -x[2],  x[3])
+const global _rot11(x)::Tuple{Int64, Int64, Int64} = (-x[2], -x[3],  x[1])
+const global _rot12(x)::Tuple{Int64, Int64, Int64} = (-x[3], -x[1],  x[2])
 
+const global _rot13(x)::Tuple{Int64, Int64, Int64} = (-x[3],  x[2],  x[1])
+const global _rot14(x)::Tuple{Int64, Int64, Int64} = (-x[2],  x[1],  x[3])
+const global _rot15(x)::Tuple{Int64, Int64, Int64} = (-x[1],  x[3],  x[2])
 
-const global _rot13(x) = (-x[3], x[2], x[1])
-const global _rot14(x) = (-x[2], x[1], x[3])
-const global _rot15(x) = (-x[1], x[3], x[2])
+const global _rot16(x)::Tuple{Int64, Int64, Int64} = ( x[3], -x[2],  x[1])
+const global _rot17(x)::Tuple{Int64, Int64, Int64} = ( x[2], -x[1],  x[3])
+const global _rot18(x)::Tuple{Int64, Int64, Int64} = ( x[1], -x[3],  x[2])
 
-const global _rot16(x) = (x[3], -x[2], x[1])
-const global _rot17(x) = (x[2], -x[1], x[3])
-const global _rot18(x) = (x[1], -x[3], x[2])
+const global _rot19(x)::Tuple{Int64, Int64, Int64} = ( x[3],  x[2], -x[1])
+const global _rot20(x)::Tuple{Int64, Int64, Int64} = ( x[2],  x[1], -x[3])
+const global _rot21(x)::Tuple{Int64, Int64, Int64} = ( x[1],  x[3], -x[2])
 
-const global _rot19(x) = (x[3], x[2], -x[1])
-const global _rot20(x) = (x[2], x[1], -x[3])
-const global _rot21(x) = (x[1], x[3], -x[2])
+const global _rot22(x)::Tuple{Int64, Int64, Int64} = (-x[3], -x[2], -x[1])
+const global _rot23(x)::Tuple{Int64, Int64, Int64} = (-x[2], -x[1], -x[3])
+const global _rot24(x)::Tuple{Int64, Int64, Int64} = (-x[1], -x[3], -x[2])
 
-const global _rot22(x) = (-x[3], -x[2], -x[1])
-const global _rot23(x) = (-x[2], -x[1], -x[3])
-const global _rot24(x) = (-x[1], -x[3], -x[2])
-
-const global Rotations = [
+const global Rotations::Vector{Tuple{Int64, Int64, Int64}} = [
     _rot01,
     _rot02,
     _rot03,
