@@ -31,7 +31,7 @@ const global _rot22(x)::Tuple{Int64, Int64, Int64} = (-x[3], -x[2], -x[1])
 const global _rot23(x)::Tuple{Int64, Int64, Int64} = (-x[2], -x[1], -x[3])
 const global _rot24(x)::Tuple{Int64, Int64, Int64} = (-x[1], -x[3], -x[2])
 
-const global Rotations::Vector{Tuple{Int64, Int64, Int64}} = [
+const global Rotations = [
     _rot01,
     _rot02,
     _rot03,
