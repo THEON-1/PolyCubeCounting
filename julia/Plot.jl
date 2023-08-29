@@ -19,11 +19,8 @@ def plotShapesPY(vs):
         plotShapePY(vs[0])
     else:
         fig = plt.figure()
-        print(n)
         n_rows = int(np.ceil(0.6*n))
         n_cols = int(np.ceil(n/n_rows))
-        print(n_rows)
-        print(n_cols)
         for i in range(len(vs)):
             v = vs[i]
             ax = fig.add_subplot(n_cols, n_rows, i+1, projection='3d')
