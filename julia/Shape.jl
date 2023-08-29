@@ -1,28 +1,40 @@
-include("SortingModifiers.jl")
+include("Rotations.jl")
 
 struct Shape
-    cubes::Set{Tuple{Int8, Int8, Int8}}
-    recentCubes::Set{Tuple{Int8, Int8, Int8}}
-    orderedLists::Vector{Vector{Tuple{Int8, Int8, Int8}}}
+    cubes::Set{Tuple{Int64, Int64, Int64}}
+    recentCubes::Set{Tuple{Int64, Int64, Int64}}
+    orderedLists::Vector{Vector{Tuple{Int64, Int64, Int64}}}
 end
 
-function trypush!(S::Shape, t::Tuple{Int8, Int8, Int8})
-    if t ∈ S.cubes
-        return false
-    else
-        push!(S.cubes, t)
-        for i ∈ 1:24
-            index = searchsortedfirst(S.orderedLists[i], t, by=SortingModifiers[i])
-            insert!(S.orderedLists, index, t)
-        end
-        return true
+function Base.:push!(S::Shape, t::Tuple{Int64, Int64, Int64})
+    push!(S.cubes, t)
+    for i ∈ 1:24
+        t_rot = Rotations[i](t)
+        index = searchsortedfirst(S.orderedLists[i], t_rot)
+        insert!(S.orderedLists[i], index, t_rot)
     end
+end
+
+function getPossibleNeighbors(S::Shape)
+    possibleSpots = Set{Tuple{Int64, Int64, Int64}}()
+    for p ∈ S.cubes
+        push!(possibleSpots,
+            p + (1, 0, 0),
+            p + (0, 1, 0),
+            p + (0, 0, 1),
+            p - (1, 0, 0),
+            p - (0, 1, 0),
+            p - (0, 0, 1)
+        )
+    end
+    spots = setdiff(possibleSpots, S.cubes)
+    return spots
 end
 
 function getCube()
     return Shape(
-        {(0, 0, 0)},
-        {(0, 0, 0)},
+        Set([(0, 0, 0)]),
+        Set([(0, 0, 0)]),
         [
             [(0, 0, 0)],
             [(0, 0, 0)],

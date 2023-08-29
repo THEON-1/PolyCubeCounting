@@ -4,6 +4,8 @@ global _calculatedPowerSets = Matrix{Int64}(undef, 1, 0)
 global _grownUntil = 0
 
 function getPowerSet(setSize::Integer)
+    global _calculatedPowerSets
+    global _grownUntil
     wantedPowerSetSize = 2^setSize
     if setSize <= _grownUntil
         return _calculatedPowerSets[1:wantedPowerSetSize, 1:setSize]
@@ -29,13 +31,19 @@ end
 
 function getPowerSubSet(setSize::Integer, subSetSize::Integer)
     PowerSet = getPowerSet(setSize)
-    setSizes = dropdim(sum(Powerset, dims = 2), dims = 2)
+    setSizes = dropdims(sum(PowerSet, dims = 2), dims = 2)
     powerSubSetSize = binomial(setSize, subSetSize)
-    powerSubSets = Matrix{Int64}(undef, powerSubSetSize, setSize)
+    powerSubSets = Matrix{Int64}(undef, powerSubSetSize, subSetSize)
     j = 1
-    for i ∈ 1:setSize
+    for i ∈ axes(PowerSet, 1)
         if setSizes[i] == subSetSize
-            powerSubSets[j, :] = PowerSet[i, :]
+            l = 1
+            for k ∈ axes(PowerSet, 2)
+                if PowerSet[i, k] == 1
+                    powerSubSets[j, l] = k
+                    l += 1
+                end
+            end
             j += 1
         end
     end
