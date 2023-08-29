@@ -3,33 +3,34 @@ const global _rot01(x) = (x[1], x[2], x[3])
 const global _rot02(x) = (x[2], x[3], x[1])
 const global _rot03(x) = (x[3], x[1], x[2])
 
-const global _rot04(x) = (x[1], x[2], -x[3])
-const global _rot05(x) = (x[2], x[3], -x[1])
-const global _rot06(x) = (x[3], x[1], -x[2])
+const global _rot04(x) = (x[1], -x[2], -x[3])
+const global _rot05(x) = (x[2], -x[3], -x[1])
+const global _rot06(x) = (x[3], -x[1], -x[2])
 
-const global _rot07(x) = (x[1], -x[2], x[3])
-const global _rot08(x) = (x[2], -x[3], x[1])
-const global _rot09(x) = (x[3], -x[1], x[2])
+const global _rot07(x) = (-x[1], x[2], -x[3])
+const global _rot08(x) = (-x[2], x[3], -x[1])
+const global _rot09(x) = (-x[3], x[1], -x[2])
 
-const global _rot10(x) = (x[1], -x[2], -x[3])
-const global _rot11(x) = (x[2], -x[3], -x[1])
-const global _rot12(x) = (x[3], -x[1], -x[2])
+const global _rot10(x) = (-x[1], -x[2], x[3])
+const global _rot11(x) = (-x[2], -x[3], x[1])
+const global _rot12(x) = (-x[3], -x[1], x[2])
 
-const global _rot13(x) = (-x[1], x[2], x[3])
-const global _rot14(x) = (-x[2], x[3], x[1])
-const global _rot15(x) = (-x[3], x[1], x[2])
 
-const global _rot16(x) = (-x[1], x[2], -x[3])
-const global _rot17(x) = (-x[2], x[3], -x[1])
-const global _rot18(x) = (-x[3], x[1], -x[2])
+const global _rot13(x) = (-x[3], x[2], x[1])
+const global _rot14(x) = (-x[2], x[1], x[3])
+const global _rot15(x) = (-x[1], x[3], x[2])
 
-const global _rot19(x) = (-x[1], -x[2], x[3])
-const global _rot20(x) = (-x[2], -x[3], x[1])
-const global _rot21(x) = (-x[3], -x[1], x[2])
+const global _rot16(x) = (x[3], -x[2], x[1])
+const global _rot17(x) = (x[2], -x[1], x[3])
+const global _rot18(x) = (x[1], -x[3], x[2])
 
-const global _rot22(x) = (-x[1], -x[2], -x[3])
-const global _rot23(x) = (-x[2], -x[3], -x[1])
-const global _rot24(x) = (-x[3], -x[1], -x[2])
+const global _rot19(x) = (x[3], x[2], -x[1])
+const global _rot20(x) = (x[2], x[1], -x[3])
+const global _rot21(x) = (x[1], x[3], -x[2])
+
+const global _rot22(x) = (-x[3], -x[2], -x[1])
+const global _rot23(x) = (-x[2], -x[1], -x[3])
+const global _rot24(x) = (-x[1], -x[3], -x[2])
 
 const global Rotations = [
     _rot01,
