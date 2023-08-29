@@ -13,8 +13,11 @@ function main()
         "-g"
             help = "generator"
             arg_type = Int
+        "-c"
+            help = "shape count"
+            action = :store_true
         "-l"
-            help = "list"
+            help = "shape list"
             action = :store_true
         "-p"
             help = "plot n_cubes i_shape"
@@ -27,6 +30,9 @@ function main()
     generate = get(parsed_args, "g", nothing)
     if generate !== nothing && generate > 0
         scanForShapes(generate)
+    end
+    if get(parsed_args, "c", false)
+        countShapes()
     end
     if get(parsed_args, "l", false)
         listShapes()
@@ -72,9 +78,20 @@ function scanForShapes(MaxSize::Int64)
     serialize("results.bin", sanitizedData)
 end
 
+function countShapes()
+    T = deserialize("results.bin")
+    n = T[1]
+    for i ∈ 1:n
+        print("n = ")
+        print(i)
+        print(": ")
+        println(length(T[2][i]))
+    end
+end
+
 function listShapes()
     T = deserialize("results.bin")
-    print("size: ")
+    print("max size: ")
     println(T[1])
     for V ∈ T[2]
         for v ∈ V
