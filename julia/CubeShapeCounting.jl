@@ -5,7 +5,6 @@ include("TupleMisc.jl")
 include("plot.jl")
 using XXhash
 using Serialization
-using DataStructures
 using ArgParse
 
 function main()
@@ -42,7 +41,7 @@ end
 
 function scanForShapes(MaxSize::Int64)
     D = Dict{UInt, ImmutableOrientedShape}()
-    S = Stack{Shape}();
+    S = Vector{Shape}();
     cube = getCube()
     immutableCube = getImmutableOrientedShape(cube)
     D[immutableCube.hash] = immutableCube
