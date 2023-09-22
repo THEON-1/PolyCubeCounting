@@ -1,11 +1,11 @@
 include("Shape.jl")
 include("ImmutableOrientedShape.jl")
-include("Powerset.jl")
 include("TupleMisc.jl")
 include("plot.jl")
 using XXhash
 using Serialization
 using ArgParse
+using Combinatorics
 
 function main()
     s = ArgParseSettings()
@@ -45,6 +45,13 @@ function main()
     end
 end
 
+function options()
+    println("scanForShapes(Int::n): scans for shapes of size <=n")
+    println("countShapes(): opens shape storage and displays the amount of shapes for the generated sizes")
+    println("listshapes(): lists all shapes from the shape storage")
+    println("plot(Vector{Int}::v): plots shapes of size v[1], or just v[2] from the list")
+end
+
 function scanForShapes(MaxSize::Int64)
     D = Dict{UInt, ImmutableOrientedShape}()
     S = Vector{Shape}();
@@ -57,29 +64,53 @@ function scanForShapes(MaxSize::Int64)
         cube = pop!(S)
         growableSpaces = collect(getPossibleNeighbors(cube))
         acceptable_growth = MaxSize - length(cube.cubes)
-        for i ∈ 1:acceptable_growth
-            possibleGrowth = Powerset.getPowerSubSet(length(growableSpaces), i)
-            for j ∈ axes(possibleGrowth, 1)
-                cubesToAdd = growableSpaces[possibleGrowth[j, :]]
-                newShape = deepcopy(cube)
-                for c ∈ cubesToAdd
-                    push!(newShape, c)
-                end
-                collision = checkForCollision(newShape, D)
-                if !collision
-                    push!(S, newShape)
-                    immutableNewShape = getImmutableOrientedShape(newShape)
-                    D[immutableNewShape.hash] = immutableNewShape
-                end
+        possibleGrowth = powerset(growableSpaces, 1, acceptable_growth)
+        for cubesToAdd ∈ possibleGrowth
+            newShape = deepcopy(cube)
+            for c ∈ cubesToAdd
+                push!(newShape, c)
+            end
+            collision = checkForCollision(newShape, D)
+            if !collision
+                push!(S, newShape)
+                immutableNewShape = getImmutableOrientedShape(newShape)
+                D[immutableNewShape.hash] = immutableNewShape
             end
         end
     end
     sanitizedData = sanitize(D, MaxSize)
-    serialize("results.bin", sanitizedData)
+    serialize("julia/results.bin", sanitizedData)
+end
+
+function scanForShapesRec(MaxSize::Int64)
+    D = Dict{UInt, ImmutableOrientedShape}()
+    singletonCube = getCube()
+    immutableCube = getImmutableOrientedShape(singletonCube)
+    D[immutableCube.hash] = immutableCube
+    evaluateShape(singletonCube, D, MaxSize)
+end
+
+function evaluateShape(shape::Shape, D::Dict{UInt, ImmutableOrientedShape}, MaxSize::Int64)
+    growableSpaces = collect(getPossibleNeighbors(shape))
+    acceptable_growth = MaxSize - length(shape.cubes)
+    
+    possibleGrowth = powerset(growableSpaces, 1, acceptable_growth)
+    for cubesToAdd ∈ possibleGrowth
+        newShape = deepcopy(shape)
+        for c ∈ cubesToAdd
+            push!(newShape, c)
+        end
+        collision = checkForCollision(newShape, D)
+        if !collision
+            immutableNewShape = getImmutableOrientedShape(newShape)
+            D[immutableNewShape.hash] = immutableNewShape
+            evaluateShape(newShape, D, MaxSize)
+        end
+    end
 end
 
 function countShapes()
-    T = deserialize("results.bin")
+    T = deserialize("julia/results.bin")
     n = T[1]
     for i ∈ 1:n
         print("n = ")
@@ -90,7 +121,7 @@ function countShapes()
 end
 
 function listShapes()
-    T = deserialize("results.bin")
+    T = deserialize("julia/results.bin")
     print("max size: ")
     println(T[1])
     for V ∈ T[2]
