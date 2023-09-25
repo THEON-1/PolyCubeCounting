@@ -6,10 +6,10 @@ using Serialization
 using Combinatorics
 
 function options()
-    println("scanForPolycubes(Int::n): scans for Polycubes of size <=n")
+    println("scanForPolycubes(MaxSize::Int64): scans for Polycubes of size <=MaxSize")
     println("countPolycubes(): opens Polycube storage and displays the amount of Polycubes for the generated sizes")
     println("listPolycubes(): lists all Polycubes from the Polycube storage")
-    println("plot(Vector{Int}::v): plots Polycubes of size v[1], or just v[2] from the list")
+    println("plotPolycubes(nCubes::Int64, index::Int64=-1): plots Polycubes of size v[1], or just v[2] from the list")
 end
 
 function scanForPolycubes(MaxSize::Int64)
@@ -18,6 +18,7 @@ function scanForPolycubes(MaxSize::Int64)
     immutableCube = getImmutableOrientedPolycube(singletonCube)
     D[immutableCube.hash] = immutableCube
     evaluatePolycube(singletonCube, D, MaxSize)
+    serialize("julia/results.bin", sanitize(D, MaxSize))
 end
 
 function evaluatePolycube(polycube::Polycube, D::Dict{UInt, ImmutableOrientedPolycube}, MaxSize::Int64)
@@ -40,7 +41,7 @@ function evaluatePolycube(polycube::Polycube, D::Dict{UInt, ImmutableOrientedPol
 end
 
 function countPolycubes()
-    T = deserialize("results.bin")
+    T = deserialize("julia/results.bin")
     n = T[1]
     for i ∈ 1:n
         print("n = ")
@@ -51,7 +52,7 @@ function countPolycubes()
 end
 
 function listPolycubes()
-    T = deserialize("results.bin")
+    T = deserialize("julia/results.bin")
     print("max size: ")
     println(T[1])
     for V ∈ T[2]
@@ -90,3 +91,6 @@ function sanitize(D::Dict{UInt, ImmutableOrientedPolycube}, size::Int64)
     end
     return (size, data)
 end
+
+Base.:+(t1 = Tuple{Int64, Int64, Int64}, t2 = Tuple{Int64, Int64, Int64}) = (t1[1] + t2[1], t1[2] + t2[2], t1[3] + t2[3])
+Base.:-(t1 = Tuple{Int64, Int64, Int64}, t2 = Tuple{Int64, Int64, Int64}) = t1 + t2.*-1
