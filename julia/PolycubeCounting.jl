@@ -12,13 +12,16 @@ function options()
     println("plotPolycubes(nCubes::Int64, index::Int64=-1): plots Polycubes of size v[1], or just v[2] from the list")
 end
 
-function scanForPolycubes(MaxSize::Int64)
+function scanForPolycubes(MaxSize::Int64, debug::Bool=false)
+    T = deserialize("julia/results.bin")
+    n = T[1]
+    if (~debug & MaxSize <= n) return end
     D = Dict{UInt, ImmutableOrientedPolycube}()
     singletonCube = getCube()
     immutableCube = getImmutableOrientedPolycube(singletonCube)
     D[immutableCube.hash] = immutableCube
     evaluatePolycube(singletonCube, D, MaxSize)
-    serialize("julia/results.bin", sanitize(D, MaxSize))
+    if (~debug) serialize("julia/results.bin", sanitize(D, MaxSize)) end
 end
 
 function evaluatePolycube(polycube::Polycube, D::Dict{UInt, ImmutableOrientedPolycube}, MaxSize::Int64)
