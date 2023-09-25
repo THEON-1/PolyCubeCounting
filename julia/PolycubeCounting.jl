@@ -41,7 +41,7 @@ function evaluatePolycube(polycube::Polycube, D::Dict{UInt, ImmutableOrientedPol
 end
 
 function countPolycubes()
-    T = deserialize("julia/results.bin")
+    T = deserialize("results.bin")
     n = T[1]
     for i ∈ 1:n
         print("n = ")
@@ -52,7 +52,7 @@ function countPolycubes()
 end
 
 function listPolycubes()
-    T = deserialize("julia/results.bin")
+    T = deserialize("results.bin")
     print("max size: ")
     println(T[1])
     for V ∈ T[2]
