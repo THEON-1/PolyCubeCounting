@@ -1,34 +1,34 @@
-_rot01(x::Tuple{Int64, Int64, Int64}) = ( x[1],  x[2],  x[3])
-_rot02(x::Tuple{Int64, Int64, Int64}) = ( x[2],  x[3],  x[1])
-_rot03(x::Tuple{Int64, Int64, Int64}) = ( x[3],  x[1],  x[2])
+_rot01(x) = ( x[1],  x[2],  x[3])
+_rot02(x) = ( x[2],  x[3],  x[1])
+_rot03(x) = ( x[3],  x[1],  x[2])
 
-_rot04(x::Tuple{Int64, Int64, Int64}) = ( x[1], -x[2], -x[3])
-_rot05(x::Tuple{Int64, Int64, Int64}) = ( x[2], -x[3], -x[1])
-_rot06(x::Tuple{Int64, Int64, Int64}) = ( x[3], -x[1], -x[2])
+_rot04(x) = ( x[1], -x[2], -x[3])
+_rot05(x) = ( x[2], -x[3], -x[1])
+_rot06(x) = ( x[3], -x[1], -x[2])
 
-_rot07(x::Tuple{Int64, Int64, Int64}) = (-x[1],  x[2], -x[3])
-_rot08(x::Tuple{Int64, Int64, Int64}) = (-x[2],  x[3], -x[1])
-_rot09(x::Tuple{Int64, Int64, Int64}) = (-x[3],  x[1], -x[2])
+_rot07(x) = (-x[1],  x[2], -x[3])
+_rot08(x) = (-x[2],  x[3], -x[1])
+_rot09(x) = (-x[3],  x[1], -x[2])
 
-_rot10(x::Tuple{Int64, Int64, Int64}) = (-x[1], -x[2],  x[3])
-_rot11(x::Tuple{Int64, Int64, Int64}) = (-x[2], -x[3],  x[1])
-_rot12(x::Tuple{Int64, Int64, Int64}) = (-x[3], -x[1],  x[2])
+_rot10(x) = (-x[1], -x[2],  x[3])
+_rot11(x) = (-x[2], -x[3],  x[1])
+_rot12(x) = (-x[3], -x[1],  x[2])
 
-_rot13(x::Tuple{Int64, Int64, Int64}) = (-x[3],  x[2],  x[1])
-_rot14(x::Tuple{Int64, Int64, Int64}) = (-x[2],  x[1],  x[3])
-_rot15(x::Tuple{Int64, Int64, Int64}) = (-x[1],  x[3],  x[2])
+_rot13(x) = (-x[3],  x[2],  x[1])
+_rot14(x) = (-x[2],  x[1],  x[3])
+_rot15(x) = (-x[1],  x[3],  x[2])
 
-_rot16(x::Tuple{Int64, Int64, Int64}) = ( x[3], -x[2],  x[1])
-_rot17(x::Tuple{Int64, Int64, Int64}) = ( x[2], -x[1],  x[3])
-_rot18(x::Tuple{Int64, Int64, Int64}) = ( x[1], -x[3],  x[2])
+_rot16(x) = ( x[3], -x[2],  x[1])
+_rot17(x) = ( x[2], -x[1],  x[3])
+_rot18(x) = ( x[1], -x[3],  x[2])
 
-_rot19(x::Tuple{Int64, Int64, Int64}) = ( x[3],  x[2], -x[1])
-_rot20(x::Tuple{Int64, Int64, Int64}) = ( x[2],  x[1], -x[3])
-_rot21(x::Tuple{Int64, Int64, Int64}) = ( x[1],  x[3], -x[2])
+_rot19(x) = ( x[3],  x[2], -x[1])
+_rot20(x) = ( x[2],  x[1], -x[3])
+_rot21(x) = ( x[1],  x[3], -x[2])
 
-_rot22(x::Tuple{Int64, Int64, Int64}) = (-x[3], -x[2], -x[1])
-_rot23(x::Tuple{Int64, Int64, Int64}) = (-x[2], -x[1], -x[3])
-_rot24(x::Tuple{Int64, Int64, Int64}) = (-x[1], -x[3], -x[2])
+_rot22(x) = (-x[3], -x[2], -x[1])
+_rot23(x) = (-x[2], -x[1], -x[3])
+_rot24(x) = (-x[1], -x[3], -x[2])
 
 const global Rotations = (;
     _rot01,
