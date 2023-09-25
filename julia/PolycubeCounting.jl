@@ -4,6 +4,7 @@ include("plot.jl")
 using XXhash
 using Serialization
 using Combinatorics
+using WAV
 
 function options()
     println("scanForPolycubes(MaxSize::Int64): scans for Polycubes of size <=MaxSize")
@@ -15,13 +16,17 @@ end
 function scanForPolycubes(MaxSize::Int64, debug::Bool=false)
     T = deserialize("julia/results.bin")
     n = T[1]
-    if (~debug & MaxSize <= n) return end
-    D = Dict{UInt, ImmutableOrientedPolycube}()
-    singletonCube = getCube()
-    immutableCube = getImmutableOrientedPolycube(singletonCube)
-    D[immutableCube.hash] = immutableCube
-    evaluatePolycube(singletonCube, D, MaxSize)
+    if (~debug && MaxSize <= n) return; end
+    @time begin
+        D = Dict{UInt, ImmutableOrientedPolycube}()
+        singletonCube = getCube()
+        immutableCube = getImmutableOrientedPolycube(singletonCube)
+        D[immutableCube.hash] = immutableCube
+        evaluatePolycube(singletonCube, D, MaxSize)
+    end
     if (~debug) serialize("julia/results.bin", sanitize(D, MaxSize)) end
+    y, fs = wavread("julia/background-error.wav")
+    wavplay(y, fs)
 end
 
 function evaluatePolycube(polycube::Polycube, D::Dict{UInt, ImmutableOrientedPolycube}, MaxSize::Int64)
