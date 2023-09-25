@@ -15,36 +15,6 @@ end
 
 function scanForPolycubes(MaxSize::Int64)
     D = Dict{UInt, ImmutableOrientedPolycube}()
-    S = Vector{Polycube}();
-    cube = getCube()
-    immutableCube = getImmutableOrientedPolycube(cube)
-    D[immutableCube.hash] = immutableCube
-    push!(S, cube)
-
-    while !isempty(S)
-        cube = pop!(S)
-        growableSpaces = collect(getPossibleNeighbors(cube))
-        acceptable_growth = MaxSize - length(cube.cubes)
-        possibleGrowth = powerset(growableSpaces, 1, acceptable_growth)
-        for cubesToAdd ∈ possibleGrowth
-            newPolycube = Polycube(copy(cube.cubes), Set(cubesToAdd), deepcopy(cube.orderedLists))
-            for c ∈ cubesToAdd
-                push!(newPolycube, c)
-            end
-            collision = checkForCollision(newPolycube, D)
-            if !collision
-                push!(S, newPolycube)
-                immutableNewPolycube = getImmutableOrientedPolycube(newPolycube)
-                D[immutableNewPolycube.hash] = immutableNewPolycube
-            end
-        end
-    end
-    sanitizedData = sanitize(D, MaxSize)
-    serialize("julia/results.bin", sanitizedData)
-end
-
-function scanForPolycubesRec(MaxSize::Int64)
-    D = Dict{UInt, ImmutableOrientedPolycube}()
     singletonCube = getCube()
     immutableCube = getImmutableOrientedPolycube(singletonCube)
     D[immutableCube.hash] = immutableCube
