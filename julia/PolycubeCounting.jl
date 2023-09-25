@@ -121,5 +121,3 @@ function sanitize(D::Dict{UInt, ImmutableOrientedPolycube}, size::Int64)
     end
     return (size, data)
 end
-
-main()
