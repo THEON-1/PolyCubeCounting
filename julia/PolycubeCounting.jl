@@ -27,7 +27,7 @@ function scanForPolycubes(MaxSize::Int64)
         acceptable_growth = MaxSize - length(cube.cubes)
         possibleGrowth = powerset(growableSpaces, 1, acceptable_growth)
         for cubesToAdd ∈ possibleGrowth
-            newPolycube = deepcopy(cube)
+            newPolycube = Polycube(copy(cube.cubes), Set(cubesToAdd), deepcopy(cube.orderedLists))
             for c ∈ cubesToAdd
                 push!(newPolycube, c)
             end
@@ -57,7 +57,7 @@ function evaluatePolycube(polycube::Polycube, D::Dict{UInt, ImmutableOrientedPol
     
     possibleGrowth = powerset(growableSpaces, 1, acceptable_growth)
     for cubesToAdd ∈ possibleGrowth
-        newPolycube = deepcopy(polycube)
+        newPolycube = Polycube(copy(polycube.cubes), Set(cubesToAdd), deepcopy(polycube.orderedLists))
         for c ∈ cubesToAdd
             push!(newPolycube, c)
         end
