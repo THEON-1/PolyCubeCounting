@@ -19,12 +19,12 @@ function getPossibleNeighbors(S::Polycube)
     possibleSpots = Set{Tuple{Int64, Int64, Int64}}()
     for p ∈ S.recentCubes
         push!(possibleSpots,
-            p + (1, 0, 0),
-            p + (0, 1, 0),
-            p + (0, 0, 1),
-            p - (1, 0, 0),
-            p - (0, 1, 0),
-            p - (0, 0, 1)
+            p .+ (1, 0, 0),
+            p .+ (0, 1, 0),
+            p .+ (0, 0, 1),
+            p .- (1, 0, 0),
+            p .- (0, 1, 0),
+            p .- (0, 0, 1)
         )
     end
     spots = setdiff(possibleSpots, S.cubes)
