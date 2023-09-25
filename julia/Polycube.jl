@@ -1,12 +1,12 @@
 include("Rotations.jl")
 
-struct Shape
+struct Polycube
     cubes::Set{Tuple{Int64, Int64, Int64}}
     recentCubes::Set{Tuple{Int64, Int64, Int64}}
     orderedLists::Vector{Vector{Tuple{Int64, Int64, Int64}}}
 end
 
-function Base.:push!(S::Shape, t::Tuple{Int64, Int64, Int64})
+function Base.:push!(S::Polycube, t::Tuple{Int64, Int64, Int64})
     push!(S.cubes, t)
     for i ∈ 1:24
         t_rot = Rotations[i](t)
@@ -15,7 +15,7 @@ function Base.:push!(S::Shape, t::Tuple{Int64, Int64, Int64})
     end
 end
 
-function getPossibleNeighbors(S::Shape)
+function getPossibleNeighbors(S::Polycube)
     possibleSpots = Set{Tuple{Int64, Int64, Int64}}()
     for p ∈ S.cubes
         push!(possibleSpots,
@@ -32,7 +32,7 @@ function getPossibleNeighbors(S::Shape)
 end
 
 function getCube()
-    return Shape(
+    return Polycube(
         Set([(0, 0, 0)]),
         Set([(0, 0, 0)]),
         [

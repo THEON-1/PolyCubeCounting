@@ -1,5 +1,5 @@
-include("Shape.jl")
-include("ImmutableOrientedShape.jl")
+include("Polycube.jl")
+include("ImmutableOrientedPolycube.jl")
 include("TupleMisc.jl")
 include("plot.jl")
 using XXhash
@@ -14,13 +14,13 @@ function main()
             help = "generator"
             arg_type = Int
         "-c"
-            help = "shape count"
+            help = "Polycube count"
             action = :store_true
         "-l"
-            help = "shape list"
+            help = "Polycube list"
             action = :store_true
         "-p"
-            help = "plot n_cubes i_shape"
+            help = "plot n_cubes i_Polycube"
             nargs = '+'
             arg_type = Int
     end
@@ -29,34 +29,34 @@ function main()
 
     generate = get(parsed_args, "g", nothing)
     if generate !== nothing && generate > 0
-        scanForShapes(generate)
+        scanForPolycubes(generate)
     end
     if get(parsed_args, "c", false)
-        countShapes()
+        countPolycubes()
     end
     if get(parsed_args, "l", false)
-        listShapes()
+        listPolycubes()
     end
     plot = get(parsed_args, "p", nothing)
     if length(plot) == 1
-        plotShapes(plot)
+        plotPolycubes(plot)
     elseif length(plot) == 2
-        plotShape(plot)
+        plotPolycube(plot)
     end
 end
 
 function options()
-    println("scanForShapes(Int::n): scans for shapes of size <=n")
-    println("countShapes(): opens shape storage and displays the amount of shapes for the generated sizes")
-    println("listshapes(): lists all shapes from the shape storage")
-    println("plot(Vector{Int}::v): plots shapes of size v[1], or just v[2] from the list")
+    println("scanForPolycubes(Int::n): scans for Polycubes of size <=n")
+    println("countPolycubes(): opens Polycube storage and displays the amount of Polycubes for the generated sizes")
+    println("listPolycubes(): lists all Polycubes from the Polycube storage")
+    println("plot(Vector{Int}::v): plots Polycubes of size v[1], or just v[2] from the list")
 end
 
-function scanForShapes(MaxSize::Int64)
-    D = Dict{UInt, ImmutableOrientedShape}()
-    S = Vector{Shape}();
+function scanForPolycubes(MaxSize::Int64)
+    D = Dict{UInt, ImmutableOrientedPolycube}()
+    S = Vector{Polycube}();
     cube = getCube()
-    immutableCube = getImmutableOrientedShape(cube)
+    immutableCube = getImmutableOrientedPolycube(cube)
     D[immutableCube.hash] = immutableCube
     push!(S, cube)
 
@@ -66,15 +66,15 @@ function scanForShapes(MaxSize::Int64)
         acceptable_growth = MaxSize - length(cube.cubes)
         possibleGrowth = powerset(growableSpaces, 1, acceptable_growth)
         for cubesToAdd ∈ possibleGrowth
-            newShape = deepcopy(cube)
+            newPolycube = deepcopy(cube)
             for c ∈ cubesToAdd
-                push!(newShape, c)
+                push!(newPolycube, c)
             end
-            collision = checkForCollision(newShape, D)
+            collision = checkForCollision(newPolycube, D)
             if !collision
-                push!(S, newShape)
-                immutableNewShape = getImmutableOrientedShape(newShape)
-                D[immutableNewShape.hash] = immutableNewShape
+                push!(S, newPolycube)
+                immutableNewPolycube = getImmutableOrientedPolycube(newPolycube)
+                D[immutableNewPolycube.hash] = immutableNewPolycube
             end
         end
     end
@@ -82,34 +82,34 @@ function scanForShapes(MaxSize::Int64)
     serialize("julia/results.bin", sanitizedData)
 end
 
-function scanForShapesRec(MaxSize::Int64)
-    D = Dict{UInt, ImmutableOrientedShape}()
+function scanForPolycubesRec(MaxSize::Int64)
+    D = Dict{UInt, ImmutableOrientedPolycube}()
     singletonCube = getCube()
-    immutableCube = getImmutableOrientedShape(singletonCube)
+    immutableCube = getImmutableOrientedPolycube(singletonCube)
     D[immutableCube.hash] = immutableCube
-    evaluateShape(singletonCube, D, MaxSize)
+    evaluatePolycube(singletonCube, D, MaxSize)
 end
 
-function evaluateShape(shape::Shape, D::Dict{UInt, ImmutableOrientedShape}, MaxSize::Int64)
-    growableSpaces = collect(getPossibleNeighbors(shape))
-    acceptable_growth = MaxSize - length(shape.cubes)
+function evaluatePolycube(polycube::Polycube, D::Dict{UInt, ImmutableOrientedPolycube}, MaxSize::Int64)
+    growableSpaces = collect(getPossibleNeighbors(polycube))
+    acceptable_growth = MaxSize - length(polycube.cubes)
     
     possibleGrowth = powerset(growableSpaces, 1, acceptable_growth)
     for cubesToAdd ∈ possibleGrowth
-        newShape = deepcopy(shape)
+        newPolycube = deepcopy(polycube)
         for c ∈ cubesToAdd
-            push!(newShape, c)
+            push!(newPolycube, c)
         end
-        collision = checkForCollision(newShape, D)
+        collision = checkForCollision(newPolycube, D)
         if !collision
-            immutableNewShape = getImmutableOrientedShape(newShape)
-            D[immutableNewShape.hash] = immutableNewShape
-            evaluateShape(newShape, D, MaxSize)
+            immutableNewPolycube = getImmutableOrientedPolycube(newPolycube)
+            D[immutableNewPolycube.hash] = immutableNewPolycube
+            evaluatePolycube(newPolycube, D, MaxSize)
         end
     end
 end
 
-function countShapes()
+function countPolycubes()
     T = deserialize("julia/results.bin")
     n = T[1]
     for i ∈ 1:n
@@ -120,7 +120,7 @@ function countShapes()
     end
 end
 
-function listShapes()
+function listPolycubes()
     T = deserialize("julia/results.bin")
     print("max size: ")
     println(T[1])
@@ -131,7 +131,7 @@ function listShapes()
     end
 end
 
-function checkForCollision(S::Shape, D::Dict{UInt, ImmutableOrientedShape})
+function checkForCollision(S::Polycube, D::Dict{UInt, ImmutableOrientedPolycube})
     for i ∈ 1:24
         hash = hashList(S.orderedLists[i])
         value = get(D, hash, nothing)
@@ -150,7 +150,7 @@ function hashList(L::Vector{Tuple{Int64, Int64, Int64}})
     return xxh3_64(diffList)
 end
 
-function sanitize(D::Dict{UInt, ImmutableOrientedShape}, size::Int64)
+function sanitize(D::Dict{UInt, ImmutableOrientedPolycube}, size::Int64)
     data = Vector{Vector{Vector{Tuple{Int64, Int64, Int64}}}}(undef, size)
     for i ∈ eachindex(data)
         data[i] = Vector{Vector{Tuple{Int64, Int64, Int64}}}(undef, 0)
