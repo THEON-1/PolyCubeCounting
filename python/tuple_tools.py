@@ -9,7 +9,7 @@ def generate_neighbors(a, b, c):
         (a, b, c+1)
     ]
 
-def reorient_tuple(t, n):
+def reorient_tuple(t: tuple, n: int) -> tuple:
     t, _ = _invert(*_flip(*_rotate(t, n)))
     return t
 
