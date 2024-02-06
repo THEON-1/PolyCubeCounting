@@ -1,4 +1,7 @@
 
+def subtract(a, b, c, x, y, z) -> tuple:
+    return (a-x, b-y, c-z)
+
 def generate_neighbors(a, b, c):
     return [
         (a-1, b, c),
