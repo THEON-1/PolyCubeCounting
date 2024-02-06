@@ -1,5 +1,5 @@
 from python.tuple_tools import reorient_tuple, generate_neighbors
-from itertools import combinations
+from itertools import combinations, chain
 
 class PolyCube:
 
@@ -21,12 +21,12 @@ class PolyCube:
                 orientations[i].add(cube)
         self.orientations = orientations
     
-    def generate_children(self, max_length):
+    def generate_children(self, max_length:int):
         growth_candidates = set([])
         for last_addition in self.last_additions:
             growth_candidates = growth_candidates.union(generate_neighbors(*last_addition))
         growth_candidates = growth_candidates.difference(self.cubes)
-        realizable_growth =  combinations(growth_candidates, max_length)
+        realizable_growth =  chain(combinations(growth_candidates, i) for i in range(1, max_length+1))
         for addition in realizable_growth:
             yield PolyCube(self.cubes.union(addition), addition)
         
