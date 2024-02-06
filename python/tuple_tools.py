@@ -1,4 +1,14 @@
 
+def generate_neighbors(a, b, c):
+    return [
+        (a-1, b, c),
+        (a+1, b, c),
+        (a, b-1, c),
+        (a, b+1, c),
+        (a, b, c-1),
+        (a, b, c+1)
+    ]
+
 def reorient_tuple(t, n):
     t, _ = _invert(*_flip(*_rotate(t, n)))
     return t
