@@ -18,7 +18,7 @@ class PolyCube:
         orientations = [set()]*n_orientations
         for i in range(n_orientations):
             for cube in self.cubes:
-                orientations[i].add(cube)
+                orientations[i].add(reorient_tuple(cube, i))
         self.orientations = orientations
     
     def generate_children(self, max_length:int):
