@@ -26,9 +26,9 @@ class PolyCube:
                     orientations[i].append(reorient_tuple(cube, i))
                 orientations[i].sort()
                 oriented_offsets[i] = [(0, 0, 0)]*(n_cubes-1)
-                last_cube = orientations[i][0]
+                reference_cube = orientations[i][0]
                 for j in range(n_cubes-1):
-                    oriented_offsets[i][j] = subtract(*last_cube, *orientations[i][j+1])
+                    oriented_offsets[i][j] = subtract(*reference_cube, *orientations[i][j+1])
         self.oriented_offsets = oriented_offsets
     
     def generate_children(self, max_length:int):
