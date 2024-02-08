@@ -44,8 +44,8 @@ function generate_children(pcube::PolyCube, n_max::Int)
     for root_cube ∈ pcube.last_added
         for neighbor ∈ neighbors(root_cube...)
             pos_growth_candidates = searchsortedfirst(growth_candidates, neighbor)
-            # consider flipping following ||, it MAY imrove performance
-            if growth_candidates[pos_growth_candidates] != neighbor || !isempty(searchsorted(cubes, neighbor))
+            # consider flipping following ||, it MAY imrove performance, leave the first IN PLACE!!!
+            if pos_growth_candidates > length(growth_candidates) || growth_candidates[pos_growth_candidates] != neighbor || !isempty(searchsorted(cubes, neighbor))
                 insert!(growth_candidates, pos_growth_candidates, neighbor)
             end
         end
