@@ -9,7 +9,7 @@ function main(maxsize::Int)
     push!(todo, root_pcube)
 
     polycubes = Dict{Vector{Coord}, Vector{Coord}}()
-    polycubes[root_pcube.oriented_differences[0]] = root_pcube.cubes
+    polycubes[root_pcube.oriented_differences[1]] = root_pcube.cubes
 
     size_count = zeros(Int, maxsize)
     size_count[1] = 1
