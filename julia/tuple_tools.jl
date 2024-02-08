@@ -1,4 +1,4 @@
-Coord = Tuple{Number,Number,Number}
+Coord = Tuple{Int, Int, Int}
 
 function Base.:-(u::Coord, v::Coord)
     return (u[1] - v[1], u[2] - v[2], u[3] - v[3])
@@ -19,29 +19,29 @@ function orient_tuple(t::Coord, o::Int)
     return _shift_tuple(_flip_tuple(_mirror_tuple(t..., o-1)...)...)
 end
 
-function _shift_tuple(t::Coord, o::Int)
+function _shift_tuple(a::Int, b::Int, c::Int, o::Int)
     funcs = [
         (x, y, z) -> (x, y, z),
         (x, y, z) -> (y, z, x),
         (x, y, z) -> (z, x, y),
     ]
-    return (funcs[o%3+1](t...), div(o, 3))
+    return (funcs[o%3+1](a, b, c), div(o, 3))
 end
 
-function _flip_tuple(t::Coord, o::Int)
+function _flip_tuple(a::Int, b::Int, c::Int, o::Int)
     funcs = [
         (x, y, z) -> (x, y, z),
         (x, y, z) -> (-x, -y, z),
         (x, y, z) -> (-x, y, -z),
         (x, y, z) -> (x, -y, -z)
     ]
-    return (funcs[o%4+1](t...), div(o, 4))
+    return (funcs[o%4+1](a, b, c), div(o, 4))
 end
 
-function _mirror_tuple(t::Coord, o::Int)
+function _mirror_tuple(a::Int, b::Int, c::Int, o::Int)
     funcs = [
         (x, y, z) -> (x, y, z),
         (x, y, z) -> (-z, -x, -y)
     ]
-    return (funcs[o%2+1](t...), div(o, 2))
+    return (funcs[o%2+1](a, b, c), div(o, 2))
 end
