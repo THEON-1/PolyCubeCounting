@@ -2,7 +2,7 @@ include("PolyCube.jl")
 
 import JSON: json
 
-function main(maxsize::int)
+function main(maxsize::Int)
     root_pcube = PolyCube([(0, 0, 0)], [(0, 0, 0)])
 
     todo = Vector{Coord}(undef, 0)
