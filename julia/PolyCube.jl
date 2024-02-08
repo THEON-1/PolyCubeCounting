@@ -31,7 +31,7 @@ function _calculate_oriented_differences(cubes::Vector{Coord})
         reference_cube = reorientation[1]
         oriented_differences[i] = Vector{Coord}(undef, n_cubes-1)
         for j ∈ 1:n_cubes-1
-            oriented_differences[j] = reference_cube - reorientation[j+1]
+            oriented_differences[i][j] = reference_cube - reorientation[j+1]
         end
     end
     return oriented_differences
