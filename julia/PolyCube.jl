@@ -40,6 +40,9 @@ end
 function generate_children(pcube::PolyCube, n_max::Int)
     cubes = pcube.cubes
     allowed_growth = n_max - length(cubes)
+    if allowed_growth == 0
+        return []
+    end
     growth_candidates = Vector{Coord}(undef, 0)
     for root_cube ∈ pcube.last_added
         for neighbor ∈ neighbors(root_cube...)
