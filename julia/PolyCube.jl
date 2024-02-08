@@ -53,6 +53,6 @@ function generate_children(pcube::PolyCube, n_max::Int)
     return Iterators.map(x -> PolyCube(vcat(cubes, x), x), powerset(growth_candidates, 1, allowed_growth))
 end
 
-function hash!(pcube::PolyCube, UInt::h) -> UInt
+function hash!(pcube::PolyCube, UInt::h)
     return xxh3_64(pcube.oriented_differences[1])
 end

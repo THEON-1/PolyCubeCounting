@@ -36,5 +36,3 @@ function child_exists_in(dict::Dict, child::PolyCube)
     end
     return false
 end
-
-main(7)
