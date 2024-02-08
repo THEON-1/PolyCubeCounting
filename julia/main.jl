@@ -24,8 +24,8 @@ function main(maxsize::Int)
             end
         end
     end
-    write("out.dat", json(polycubes))
-    write("count.dat", json(size_count))
+    write("out.json", json(polycubes))
+    write("count.json", json(size_count))
     return
 end
 
