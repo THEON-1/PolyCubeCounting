@@ -5,7 +5,7 @@ import JSON: json
 function main(maxsize::Int)
     root_pcube = PolyCube([(0, 0, 0)], [(0, 0, 0)])
 
-    todo = Vector{Coord}(undef, 0)
+    todo = Vector{PolyCube}(undef, 0)
     push!(todo, root_pcube)
 
     polycubes = Dict{Vector{Coord}, Vector{Coord}}()
