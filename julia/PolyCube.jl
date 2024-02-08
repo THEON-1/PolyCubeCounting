@@ -7,7 +7,7 @@ import XXhash: xxh3_64
 # location data and work only on the differences
 struct PolyCube
     cubes::Vector{Coord}
-    oriented_difference::Vector{Vector{Coord}}
+    oriented_differences::Vector{Vector{Coord}}
     last_added::Vector{Coord}
 end
 
