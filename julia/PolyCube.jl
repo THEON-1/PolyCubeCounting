@@ -1,9 +1,10 @@
 include("tuple_tools.jl")
 
 import Combinatorics: powerset
+import XXhash: xxh3_64
 
-Coord = Tuple{Number, Number, Number}
-
+# since differences fully represent the structure, everything may be faster if we just dump the explicit
+# location data and work only on the differences
 struct PolyCube
     cubes::Vector{Coord}
     oriented_difference::Vector{Vector{Coord}}
@@ -50,4 +51,8 @@ function generate_children(pcube::PolyCube, n_max::Int)
         end
     end
     return Iterators.map(x -> PolyCube(vcat(cubes, x), x), powerset(growth_candidates, 1, allowed_growth))
+end
+
+function hash!(pcube::PolyCube, UInt::h) -> UInt
+    return xxh3_64(pcube.oriented_differences[1])
 end
