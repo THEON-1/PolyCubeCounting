@@ -41,7 +41,7 @@ end
 function _mirror_tuple(t::Coord, o::Int)
     funcs = [
         (x, y, z) -> (x, y, z),
-        (x, y, z) -> (-z, -x, -y)
+        (x, y, z) -> (-z, -y, -x)
     ]
     return (funcs[o%2+1](t...), div(o, 2))
 end
