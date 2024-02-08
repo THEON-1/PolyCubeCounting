@@ -1,6 +1,6 @@
 include("PolyCube.jl")
 
-import JSON: json
+import Json: json
 
 function main(maxsize::int)
     root_pcube = PolyCube([(0, 0, 0)], [(0, 0, 0)])
