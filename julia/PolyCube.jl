@@ -23,18 +23,27 @@ function _calculate_oriented_differences(cubes::Vector{Coord})
     n_cubes = length(cubes)
     reorientation = Vector{Coord}(undef, n_cubes)
     oriented_differences = Vector{Vector{Coord}}(undef, n_orientations)
-    for i ∈ 1:n_orientations
+
+    sort!(cubes)
+    _compute_differences!(oriented_differences, cubes, 1)
+
+    for i ∈ 2:n_orientations
         for j ∈ 1:n_cubes
             reorientation[j] = orient_tuple(cubes[j], i)
         end
         sort!(reorientation)
-        reference_cube = reorientation[1]
-        oriented_differences[i] = Vector{Coord}(undef, n_cubes-1)
-        for j ∈ 1:n_cubes-1
-            oriented_differences[i][j] = reference_cube - reorientation[j+1]
-        end
+        _compute_differences!(oriented_differences, reorientation, i)
     end
     return oriented_differences
+end
+
+function _compute_differences!(oriented_differences::Vector{Vector{Coord}}, reorientation::Vector{Coord}, i::Int)
+    n_cubes = length(reorientation)
+    reference_cube = reorientation[1]
+    oriented_differences[i] = Vector{Coord}(undef, n_cubes-1)
+    for j ∈ 1:n_cubes-1
+        oriented_differences[i][j] = reference_cube - reorientation[j+1]
+    end
 end
 
 function generate_children(pcube::PolyCube, n_max::Int)
