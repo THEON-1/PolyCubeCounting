@@ -18,7 +18,7 @@ function main(maxsize::Int)
         pcube = pop!(todo)
         for child ∈ generate_children(pcube, maxsize)
             if !child_exists_in(polycubes, child)
-                polycubes[child.oriented_differences[0]] = child.cubes
+                polycubes[child.oriented_differences[1]] = child.cubes
                 push!(todo, child)
                 size_count[length(child.cubes)] += 1
             end
