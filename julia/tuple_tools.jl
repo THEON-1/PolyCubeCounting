@@ -16,7 +16,7 @@ function neighbors(x::Int, y::Int, z::Int)
 end
 
 function orient_tuple(t::Coord, o::Int)
-    return _shift_tuple(_flip_tuple(_mirror_tuple(t, o-1)...)...)
+    return _shift_tuple(_flip_tuple(_mirror_tuple(t, o-1)...)...)[1]
 end
 
 function _shift_tuple(t::Coord, o::Int)
