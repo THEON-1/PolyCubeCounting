@@ -24,8 +24,9 @@ function main(maxsize::Int)
             end
         end
     end
-    write("out,dat", json(polycubes))
-    write("out,dat", json(size_count))
+    write("out.dat", json(polycubes))
+    write("count.dat", json(size_count))
+    return
 end
 
 function child_exists_in(dict::Dict, child::PolyCube)
