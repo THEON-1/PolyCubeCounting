@@ -4,19 +4,21 @@ module PolyCube (
     Offset3D (..),
     PolyCube (..),
     getOffsets,
+    applyOffset,
     diff,
     rotateCubes
 ) where
 
 import Prelude hiding (flip)
 import GHC.Generics (Generic)
-import Data.Hashable
+import Data.Hashable (Hashable)
 
 newtype Coord3D = Coord3D (Int, Int, Int)
     deriving (
         Show,
         Eq,
-        Generic
+        Generic,
+        Ord
     )
 instance Hashable Coord3D
 
@@ -24,14 +26,19 @@ newtype Offset3D = Offset3D (Int, Int, Int)
     deriving (
         Show,
         Eq,
-        Generic
+        Generic,
+        Ord
     )
 instance Hashable Offset3D
 
 data PolyCube = PolyCube {
     orientations :: [[Coord3D]],
-    lastAdded :: [Coord3D]
-} deriving Show
+    lastAdded :: [Coord3D],
+    size :: Int
+} deriving (
+    Show,
+    Eq
+    )
 
 getOffsets :: [Coord3D] -> [Offset3D]
 getOffsets [] = error "empty List"
@@ -40,6 +47,9 @@ getOffsets (x:y:xs) = diff x y:getOffsets (y:xs)
 
 diff :: Coord3D -> Coord3D -> Offset3D
 diff (Coord3D (a, b, c)) (Coord3D (x, y, z)) = Offset3D (x-a, y-b, z-c)
+
+applyOffset :: Coord3D -> Offset3D -> Coord3D
+applyOffset (Coord3D (a, b, c)) (Offset3D (x, y, z)) = Coord3D (a+x, b+y, c+z)
 
 rotateCubes :: [Coord3D] -> Int -> [Coord3D]
 rotateCubes tree n = map (invert . flip . rotate n) tree where
@@ -65,3 +75,4 @@ rotateCubes tree n = map (invert . flip . rotate n) tree where
         0 -> Coord3D (a, b, c)
         1 -> Coord3D (-c, -b, -a)
         _ -> Coord3D (a, b, c)
+

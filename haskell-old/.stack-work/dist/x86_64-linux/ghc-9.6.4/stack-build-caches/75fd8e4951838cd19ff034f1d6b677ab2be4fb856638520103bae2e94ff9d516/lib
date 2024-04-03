@@ -1,0 +1,18 @@
+/home/maxime/.ghcup/ghc/9.6.4/lib/ghc-9.6.4/lib/x86_64-linux-ghc-9.6.4/rts-1.0.2/include/ghcversion.h:
+  hash: cbc0ab805e5b827180e3116cecd3f6665988df7f45a6b64f0e09ea8c25c438ff
+/home/maxime/source/PolyCubeCounting/haskell/.stack-work/dist/x86_64-linux/ghc-9.6.4/build/autogen/Paths_pcc_haskell.hs:
+  hash: abb5e685752e098f752630b458c918261b6f2b9d32b5289292cdfe9062f954a6
+/home/maxime/source/PolyCubeCounting/haskell/.stack-work/dist/x86_64-linux/ghc-9.6.4/build/autogen/cabal_macros.h:
+  hash: 8767f2e923ac04329c60e5bcca6dda7d919593eb386ab95c2ce5b3e3053e8be2
+/home/maxime/source/PolyCubeCounting/haskell/CHANGELOG.md:
+  hash: 28635dd6cd72c05dc6d925c4f9a90594ecd1d49f800237407f3f022c515c0e7b
+/home/maxime/source/PolyCubeCounting/haskell/README.md:
+  hash: 7977cc588f7e4331316835e35589dc4ac1b6579bb1ddb004793d0f7ab27f23fe
+/home/maxime/source/PolyCubeCounting/haskell/package.yaml:
+  hash: eab634f7eb24459df2c4898a07904dbd87c46dae3c8b758755745fac6fbfec48
+/home/maxime/source/PolyCubeCounting/haskell/pcc-haskell.cabal:
+  hash: d44a183437e28c5c6176283f89ff9373ef74713e12ca2115be0b160ba2cc2ba0
+/home/maxime/source/PolyCubeCounting/haskell/src/PolyCube.hs:
+  hash: 771d981c0ac1035b15f83a5ac149206ed0bdd11669c6266e29c798babdfc8cda
+/usr/include/stdc-predef.h:
+  hash: cb08cd5d4cc059a90833ac48a284d25016e8d56ded8ad4cd98d8ac59cc5053f3

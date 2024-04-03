@@ -49,6 +49,7 @@ executables:
     dependencies:
     - pcc-haskell
     - unordered-containers
+    - combinatorial
 
 tests:
   pcc-haskell-test:
@@ -61,3 +62,4 @@ tests:
     dependencies:
     - pcc-haskell
     - unordered-containers
+    - combinatorial
