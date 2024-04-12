@@ -35,6 +35,8 @@ ghc-options:
 
 library:
   source-dirs: src
+  dependencies:
+    - hashable
 
 executables:
   pcc-haskell-exe:
@@ -46,6 +48,8 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - pcc-haskell
+    - unordered-containers
+    - combinatorial
 
 tests:
   pcc-haskell-test:
@@ -57,3 +61,5 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - pcc-haskell
+    - unordered-containers
+    - combinatorial
