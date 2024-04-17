@@ -14,7 +14,8 @@ main = do
     let polycubes = Map.singleton (getOffsets $ head $ orientations cube) (size cube, head $ orientations cube)
     let result = evaluateChildren maxSize cube polycubes
     let counts = foldr (increment . fst) [] result
-    writeFile "count.out" $ show counts
+    writeFile "count.out" $ show counts 
+    appendFile "count.out" "\n"
     return ()
 
 increment :: Int -> [Int] -> [Int]
