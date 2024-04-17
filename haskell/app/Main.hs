@@ -68,6 +68,6 @@ insertSorted :: (Ord a) => [a] -> a -> [a]
 insertSorted [] v = [v]
 insertSorted (x:xs) v
     | v < x     = v:x:xs
-    | v > x     = insertSorted xs v
+    | v > x     = x:insertSorted xs v
     | otherwise = x:xs
 
