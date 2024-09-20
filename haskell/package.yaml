@@ -37,6 +37,7 @@ library:
   source-dirs: src
   dependencies:
     - hashable
+    - combinatorial
 
 executables:
   pcc-haskell-exe:
@@ -49,7 +50,6 @@ executables:
     dependencies:
     - pcc-haskell
     - unordered-containers
-    - combinatorial
 
 tests:
   pcc-haskell-test:

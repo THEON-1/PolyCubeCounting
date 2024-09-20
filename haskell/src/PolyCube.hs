@@ -40,6 +40,7 @@ data PolyCube = PolyCube {
     Eq
     )
 
+-- offset calculations
 getOffsets :: [Coord3D] -> [Offset3D]
 getOffsets [] = error "empty List"
 getOffsets [_] = []
@@ -51,8 +52,9 @@ diff (Coord3D (a, b, c)) (Coord3D (x, y, z)) = Offset3D (x-a, y-b, z-c)
 applyOffset :: Coord3D -> Offset3D -> Coord3D
 applyOffset (Coord3D (a, b, c)) (Offset3D (x, y, z)) = Coord3D (a+x, b+y, c+z)
 
+-- calculates an oriented reprenentation
 rotateCubes :: [Coord3D] -> Int -> [Coord3D]
-rotateCubes tree n = map (invert . flip . rotate n) tree where
+rotateCubes ors n = map (invert . flip . rotate n) ors where
     rotate ::  Int -> Coord3D -> (Int, (Int, Int, Int))
     rotate i (Coord3D (a, b, c)) = case mod i 3 of
         0 -> (j, (a, b, c))
